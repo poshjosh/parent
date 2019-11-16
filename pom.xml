@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.looseboxes</groupId>
+    <artifactId>parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <packaging>pom</packaging>
+    <url>http://www.looseboxes.com</url>
+
+    <issueManagement>
+        <url>https://github.com/poshjosh/${project.artifactId}/issues</url>
+        <system>GitHub Issues</system>
+    </issueManagement>
+            
+    <scm>
+        <url>https://github.com/poshjosh/${project.artifactId}</url>
+        <connection>scm:git:git://github.com/poshjosh/${project.artifactId}.git</connection>
+        <developerConnection>scm:git:git@github.com:poshjosh/${project.artifactId}.git</developerConnection>
+    </scm>
+
+    <licenses>
+        <license>
+            <name>looseBoxes Software License</name>
+            <url>http://www.looseboxes.com/legal/licenses/software.html</url>
+        </license>
+    </licenses>
+    
+    <organization>
+        <name>looseBoxes.com</name>
+        <url>http://www.looseboxes.com</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <id>poshjosh</id>
+            <email>posh.bc@gmail.com</email>
+            <name>Chinomso Ikwuagwu</name>
+            <url>https://github.com/poshjosh</url>
+            <organization>looseBoxes.com</organization>
+            <organizationUrl>http://www.looseboxes.com</organizationUrl>
+            <roles>
+                <role>founder</role>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>Africa/Lagos</timezone>
+        </developer>
+    </developers>
+        
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.12</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.hamcrest</groupId>
+                <artifactId>hamcrest-core</artifactId>
+                <version>1.3</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <!--version>5.1.23</version-->
+                <version>8.0.15</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.persistence</groupId>
+                <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
+                <!-- 2.7.4 led to org.eclipse.persistence.exceptions.IntegrityException -->
+                <version>2.7.3</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>   
+                <groupId>org.eclipse.persistence</groupId>
+                <artifactId>eclipselink</artifactId>
+                <!-- 2.7.4 led to org.eclipse.persistence.exceptions.IntegrityException -->
+                <version>2.7.3</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.eclipse.persistence</groupId>
+                        <artifactId>javax.persistence</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!-- originally 2.1.1 version 2.2.0 led to org.eclipse.persistence.exceptions.IntegrityException -->
+            <dependency>
+                <groupId>org.eclipse.persistence</groupId>
+                <artifactId>javax.persistence</artifactId>
+                <version>2.1.1</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <!-- Executes JUnit tests and writes the results as an xml and
+                txt file Test classes must include one of the following in their
+                name: Test* *Test *TestCase -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <argLine>-Dfile.encoding=${project.build.sourceEncoding}</argLine>
+                    <skipTests>false</skipTests>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>de.empulse.eclipselink</groupId>
+                <artifactId>staticweave-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.eclipse.persistence</groupId>
+                        <artifactId>org.eclipse.persistence.jpa</artifactId>
+                        <!-- 2.7.4 led to org.eclipse.persistence.exceptions.IntegrityException -->
+                        <version>2.7.3</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+</project>

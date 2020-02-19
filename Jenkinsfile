@@ -29,5 +29,10 @@ pipeline {
                 sh 'mvn -B -DskipTests clean install' 
             }
         }
+        stage('Install') {
+            steps {
+                sh './jenkins_script_install.sh'
+            }
+        }
     }
 }

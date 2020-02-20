@@ -1,7 +1,5 @@
 /**
  * github.com/poshjosh/parent
- * https://jenkins.io/doc/tutorials/build-a-java-app-with-maven/
- * docker:build is a fabric8 command for building docker image
  */
 pipeline {
     agent { 
@@ -15,16 +13,6 @@ pipeline {
         skipStagesAfterUnstable()
     }
     stages {
-        stage ('Initialize') {
-            steps {
-                sh '''
-                    echo "- - - - - - - Stage: INITIALIZING - - - - - - -"
-                    echo "M2_HOME = %M2_HOME%"
-                    echo "JAVA_HOME = %JAVA_HOME%"
-                    echo "- - - - - - - DONE INITIALIZING - - - - - - -"
-                '''
-            }
-        }
         stage('Clean') {
             steps {
                 sh 'mvn -B -DskipTests clean' 

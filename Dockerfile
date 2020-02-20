@@ -27,6 +27,6 @@ WORKDIR /usr/src/app
 COPY pom.xml /usr/src/app
 RUN mvn -T 1C install && rm -rf target
 # ---------------
-# Copy other source files (keep in image)
+# Copy other source files (keep in image) - Not applicable to pom projects
 # ---------------
-COPY src /usr/src/app/src
+# COPY src /usr/src/app/src

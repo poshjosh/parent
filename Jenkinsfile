@@ -8,6 +8,7 @@ pipeline {
         dockerfile {
             filename 'Dockerfile'
             args '-dns 8.8.8.8 -dns 8.8.4.4 -v /var/run/docker.sock:/var/run/docker.sock -v /root/.m2:/root/.m2 -v "$HOME/.m2":/root/.m2' 
+            additionalBuildArgs '-t com.looseboxes/parent:1.0-SNAPSHOT'
         }
     }
     options {

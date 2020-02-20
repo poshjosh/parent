@@ -6,8 +6,8 @@
 pipeline {
     agent { 
         docker {
-            image 'maven:3.6.3-ibmjava-8-alpine'
-            args '-v /root/.m2:/root/.m2 -v "$HOME/.m2":/root/.m2' 
+            image 'maven:3-alpine'
+            args '-dns 8.8.8.8 -dns 8.8.4.4 -v /root/.m2:/root/.m2 -v "$HOME/.m2":/root/.m2' 
         }
     }
     options {

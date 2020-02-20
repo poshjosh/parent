@@ -1,5 +1,5 @@
 /**
- * github.com/poshjosh/parent
+ * https://github.com/poshjosh/parent
  */
 pipeline {
     agent { 

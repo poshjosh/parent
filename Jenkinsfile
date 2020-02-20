@@ -13,11 +13,6 @@ pipeline {
         skipStagesAfterUnstable()
     }
     stages {
-        stage('Clean') {
-            steps {
-                sh 'mvn -B -DskipTests clean' 
-            }
-        }
         stage('Install') {
             steps {
                 sh 'mvn jar:jar install:install help:evaluate -Dexpression=project.name'

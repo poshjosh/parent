@@ -25,14 +25,14 @@ pipeline {
                 '''
             }
         }
-        stage('Clean and Build') {
+        stage('Clean') {
             steps {
-                sh 'mvn -B -DskipTests clean install' 
+                sh 'mvn -B -DskipTests clean' 
             }
         }
         stage('Install') {
             steps {
-                sh './jenkins_script_install.sh'
+                sh 'mvn jar:jar install:install help:evaluate -Dexpression=project.name'
             }
         }
     }

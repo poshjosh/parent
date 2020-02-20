@@ -9,13 +9,10 @@ pipeline {
             additionalBuildArgs '-t com.looseboxes/parent:1.0-SNAPSHOT'
         }
     }
-    options {
-        skipStagesAfterUnstable()
-    }
     stages {
-        stage('Install') {
+        stage('Finish') {
             steps {
-                sh 'mvn jar:jar install:install help:evaluate -Dexpression=project.name'
+                sh 'echo x x x x x x x COMPLETED x x x x x x x'
             }
         }
     }

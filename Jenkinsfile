@@ -7,7 +7,7 @@ pipeline {
     agent { 
         dockerfile {
             filename 'Dockerfile'
-            args '-v /var/run/docker.sock:/var/run/docker.sock -v /root/.m2:/root/.m2 -v "$HOME/.m2":/root/.m2' 
+            args '-v /root/.m2:/root/.m2' 
             additionalBuildArgs '-t com.looseboxes/parent:1.0-SNAPSHOT'
         }
     }

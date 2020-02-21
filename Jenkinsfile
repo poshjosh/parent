@@ -5,7 +5,7 @@ pipeline {
     agent { 
         dockerfile {
             filename 'Dockerfile'
-            args '--name parent -v /root/.m2:/root/.m2' 
+            args '--name looseboxes-parent -v /root/.m2:/root/.m2' 
             additionalBuildArgs '-t com.looseboxes/parent:1.0-SNAPSHOT'
         }
     }

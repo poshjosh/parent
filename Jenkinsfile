@@ -15,10 +15,5 @@ pipeline {
                 sh 'mvn install:install help:evaluate -Dexpression=project.name'
             }
         }
-        stage('Finish') {
-            steps {
-                sh 'echo x x x x x x x COMPLETED x x x x x x x'
-            }
-        }
     }
 }

@@ -10,11 +10,6 @@ pipeline {
         }
     }
     stages {
-        stage('Clean') {
-            steps {
-                sh 'mvn clean'
-            }
-        }
         stage('Install') {
             steps {
                 sh 'mvn install:install help:evaluate -Dexpression=project.name'

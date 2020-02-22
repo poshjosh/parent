@@ -48,6 +48,10 @@
             <timezone>Africa/Lagos</timezone>
         </developer>
     </developers>
+    
+    <modules>
+        <module>../bcutil</module>
+    </modules>
         
     <dependencyManagement>
         <dependencies>

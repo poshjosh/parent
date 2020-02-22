@@ -24,5 +24,11 @@ pipeline {
                 sh 'mvn install:install help:evaluate -Dexpression=project.name'
             }
         }
+        stage('Post Install') {
+            steps {
+                echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX CURRENT WORKING DIR is ${PWD}"
+                sh 'rm -rf target'
+            } 
+        }
     }
 }

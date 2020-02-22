@@ -8,7 +8,6 @@ FROM maven:3-alpine
 # ---------------
 RUN addgroup -S looseboxes && adduser -S poshjosh -G looseboxes
 USER looseboxes:poshjosh
-Above caused error: unable to find user looseboxes: no matching entries in passwd file
 # ---------------
 # Speed up Maven a bit
 # ---------------

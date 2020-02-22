@@ -1,13 +1,16 @@
 /**
  * https://github.com/poshjosh/parent
  * @see https://hub.docker.com/_/maven
+ * Do not use --rm in args as the container will be removed by Jenkins after being 
+ * run, and jenkins will complain about not being able to remove the container if
+ * already removed due to --rm option in args.
  */
 pipeline {
     agent { 
         dockerfile {
             filename 'Dockerfile'
-            args '--rm --name looseboxes-parent -v /root/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD":/usr/src/app -v "$HOME/.m2":/root/.m2 -v "$PWD/target:/usr/src/app/target" -w /usr/src/app' 
-            additionalBuildArgs '-t com.looseboxes/parent:latest'
+            args '--name looseboxes-parent-jenkins -v /root/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD":/usr/src/app -v "$HOME/.m2":/root/.m2 -v "$PWD/target:/usr/src/app/target" -w /usr/src/app' 
+            additionalBuildArgs '-t com.looseboxes/parent-jenkins:latest'
         }
     }
     options {

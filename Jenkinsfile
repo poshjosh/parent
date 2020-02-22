@@ -1,13 +1,17 @@
+#!/usr/bin/env groovy
 /**
  * https://github.com/poshjosh/parent
  * @see https://hub.docker.com/_/maven
+ *
+ * Only double quoted strings support the dollar-sign ($) based string interpolation.
+ *
  * Do not use --rm in args as the container will be removed by Jenkins after being 
  * run, and jenkins will complain about not being able to remove the container if
  * already removed due to --rm option in args.
  */
+def PROJECT_NAME = "parent"
 pipeline {
     environment {
-        PROJECT_NAME = 'parent'
         registry = 'poshjosh/${PROJECT_NAME}'
         registryCredential = 'dockerhub'
     }

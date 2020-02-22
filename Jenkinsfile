@@ -27,7 +27,7 @@ pipeline {
         stage('Post Install') {
             steps {
                 echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX CURRENT WORKING DIR is ${PWD}"
-                sh 'rm -rf target'
+                sh "if rm -rf target; then echo 'target dir removed'; else echo 'failed to remove target dir'; fi"
             } 
         }
     }

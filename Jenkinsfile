@@ -7,14 +7,15 @@
  */
 pipeline {
     environment {
-        registry = 'poshjosh/parent'
+        PROJECT_NAME = 'parent'
+        registry = 'poshjosh/${PROJECT_NAME}'
         registryCredential = 'dockerhub'
     }
     agent { 
         dockerfile {
             filename 'Dockerfile'
-            args '--name looseboxes-parent -v /root/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD":/usr/src/app -v "$HOME/.m2":/root/.m2 -v "$PWD/target:/usr/src/app/target" -w /usr/src/app' 
-            additionalBuildArgs '-t com.looseboxes/parent:latest'
+            args '--name looseboxes-${PROJECT_NAME} -v /root/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD":/usr/src/app -v "$HOME/.m2":/root/.m2 -v "$PWD/target:/usr/src/app/target" -w /usr/src/app' 
+            additionalBuildArgs '-t com.looseboxes/${PROJECT_NAME}:latest'
         }
     }
     options {

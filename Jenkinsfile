@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Install') {
             steps {
-                sh 'mvn install:install help:evaluate -Dexpression=project.name'
+                sh 'mvn install help:evaluate -Dexpression=project.name'
             }
         }
     }

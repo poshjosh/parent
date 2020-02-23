@@ -26,13 +26,13 @@ pipeline {
         }
         stage('Clean') {
             steps {
-                sh 'mvn -B clean'
+                sh '/usr/bin/mvn -B clean'
             }
         }
         stage('Build Image') {
             steps{
                 script {
-                   dockerImage = sh('docker build . -t ${IMAGE_NAME} -f Dockerfile')
+                   dockerImage = sh(script: 'docker build . -t ${IMAGE_NAME} -f Dockerfile', returnStdout: true)
                 }
             }
         }
@@ -50,7 +50,7 @@ pipeline {
             steps{
                 script {
                     sh '''
-                        "docker login --username=${DOCKERHUB_CREDS_USR} --password=${DOCKERHUB_CREDS_PWD}"
+                        "docker login --username=${DOCKERHUB_CREDS_USR} --password=${DOCKERHUB_CREDS_PSW}"
                         "docker push ${IMAGE_NAME}"
                     '''    
                 }

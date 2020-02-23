@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Clean') {
             steps {
-                sh '/usr/bin/mvn -B clean'
+                sh 'mvn -B clean'
             }
         }
         stage('Build Image') {

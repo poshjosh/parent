@@ -30,9 +30,7 @@ pipeline {
         }
         stage('Install') {
             steps {
-                sh '''
-                    "mvn install:install help:evaluate -Dexpression=project.name"
-                '''    
+                sh 'mvn install:install help:evaluate -Dexpression=project.name'    
             }
         }
         stage('Build and Deploy Image') {

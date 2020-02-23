@@ -14,12 +14,7 @@ pipeline {
         IMAGE_NAME = 'poshjosh/parent:latest'
         dockerImage = ''
     }
-    agent { 
-        dockerfile {
-            filename 'Dockerfile'
-            args '-v /root/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD":/usr/src/app -v "$HOME/.m2":/root/.m2 -v "$PWD/target:/usr/src/app/target" -w /usr/src/app' 
-        }
-    }
+    agent any
     options {
         skipStagesAfterUnstable()
     }
@@ -37,7 +32,7 @@ pipeline {
         stage('Build Image') {
             steps{
                 script {
-                   dockerImage = docker.build -t ${IMAGE_NAME} -f Dockerfile
+                   dockerImage = sh('docker build . -t ${IMAGE_NAME} -f Dockerfile')
                 }
             }
         }
@@ -54,9 +49,10 @@ pipeline {
             }
             steps{
                 script {
-                    docker.withRegistry( '', DOCKERHUB_CREDS ) {
-                        dockerImage.push()
-                    }
+                    sh '''
+                        "docker login --username=${DOCKERHUB_CREDS_USR} --password=${DOCKERHUB_CREDS_PWD}"
+                        "docker push ${IMAGE_NAME}"
+                    '''    
                 }
             }
         }

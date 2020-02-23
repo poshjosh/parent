@@ -30,4 +30,4 @@ RUN mvn -B -f /usr/src/app/pom.xml -s /usr/share/maven/ref/settings-docker.xml d
 # Copy other source files (keep in image) - Not applicable to pom projects
 # ---------------
 # COPY src /usr/src/app/src
-ENTRYPOINT ["/usr/bin/mvn"]
+

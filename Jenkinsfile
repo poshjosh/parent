@@ -11,7 +11,7 @@
  */
 pipeline {
     environment {
-        IMAGE_NAME = 'com.looseboxes/parent:latest'
+        IMAGE_NAME = 'poshjosh/parent:latest'
         dockerImage = ''
     }
     agent { 

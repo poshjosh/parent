@@ -12,28 +12,20 @@
 pipeline {
     environment {
         IMAGE_NAME = 'poshjosh/parent:latest'
-        dockerImage = ''
     }
-    agent any
+    agent { 
+        dockerfile {
+            filename 'Dockerfile'
+            args '-v /root/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD":/usr/src/app -v "$HOME/.m2":/root/.m2 -v "$PWD/target:/usr/src/app/target" -w /usr/src/app' 
+        }
+    }
     options {
         skipStagesAfterUnstable()
     }
     stages {
-        stage('Clone Git') {
-            steps {
-                git '/home/Documents/NetBeansProjects/parent'
-            }
-        }
         stage('Clean') {
             steps {
                 sh 'mvn -B clean'
-            }
-        }
-        stage('Build Image') {
-            steps{
-                script {
-                   dockerImage = sh(script: 'docker build . -t ${IMAGE_NAME} -f Dockerfile', returnStdout: true)
-                }
             }
         }
         stage('Install') {
@@ -43,16 +35,13 @@ pipeline {
                 '''    
             }
         }
-        stage('Deploy Image') {
-            environment {
-                DOCKERHUB_CREDS = credentials('dockerhub')
-            }
+        stage('Build and Deploy Image') {
             steps{
                 script {
-                    sh '''
-                        "docker login --username=${DOCKERHUB_CREDS_USR} --password=${DOCKERHUB_CREDS_PSW}"
-                        "docker push ${IMAGE_NAME}"
-                    '''    
+                    def dockerImage = docker.build("${IMAGE_NAME}")
+                    docker.withRegistry( '', 'dockerhub' ) {
+                        dockerImage.push()
+                    }
                 }
             }
         }

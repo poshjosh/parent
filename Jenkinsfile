@@ -15,9 +15,11 @@ pipeline {
     }
     agent { 
         dockerfile {
+            label 'docker'
             filename 'Dockerfile'
+            registryCredentialsId 'dockerhub-creds'
             args '-v /root/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD":/usr/src/app -v "$HOME/.m2":/root/.m2 -v "$PWD/target:/usr/src/app/target" -w /usr/src/app' 
-            additionalBuildArgs '-t ${IMAGE_NAME}'
+            additionalBuildArgs "-t ${IMAGE_NAME}"
         }
     }
     options {
@@ -36,14 +38,14 @@ pipeline {
         }
         stage('Build and Deploy Image') {
             steps{
-                sh 'docker push ${IMAGE_NAME}'
+                sh "docker push ${IMAGE_NAME}"
             }
         }
         stage('Clean Up') {
             steps {
                 sh '''
-                    if rm -rf target; then echo 'target dir removed'; else echo 'failed to remove target dir'; fi
-                    docker rmi ${IMAGE_NAME}
+                    "if rm -rf target; then echo 'target dir removed'; else echo 'failed to remove target dir'; fi"
+                    "docker rmi ${IMAGE_NAME}"
                 '''
             } 
         }

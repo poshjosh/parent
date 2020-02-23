@@ -35,19 +35,14 @@ pipeline {
         }
         stage('Build and Deploy Image') {
             steps{
-                script {
-                    def dockerImage = docker.build("${IMAGE_NAME}")
-                    docker.withRegistry( '', 'dockerhub-creds' ) {
-                        dockerImage.push()
-                    }
-                }
+                sh 'docker push ${IMAGE_NAME}'
             }
         }
         stage('Clean Up') {
             steps {
                 sh '''
-                    "if rm -rf target; then echo 'target dir removed'; else echo 'failed to remove target dir'; fi"
-                    "docker rmi ${IMAGE_NAME}"    
+                    if rm -rf target; then echo 'target dir removed'; else echo 'failed to remove target dir'; fi
+                    docker rmi ${IMAGE_NAME}
                 '''
             } 
         }

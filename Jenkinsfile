@@ -15,7 +15,7 @@ pipeline {
         dockerfile {
             filename 'Dockerfile'
             registryCredentialsId 'dockerhub-creds'
-            args '-v /root/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD":/usr/src/app -v "$HOME/.m2":/root/.m2 -v "$PWD/target:/usr/src/app/target" -w /usr/src/app' 
+            args '-v C:/Program Files/Docker/Docker/resources/bin:/usr/bin/docker -v /root/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD":/usr/src/app -v "$HOME/.m2":/root/.m2 -v "$PWD/target:/usr/src/app/target" -w /usr/src/app' 
             additionalBuildArgs "-t ${IMAGE_NAME}"
         }
     }
@@ -26,12 +26,6 @@ pipeline {
         skipStagesAfterUnstable()
     }
     stages {
-        stage('Initialize'){
-            steps {
-                echo "PATH_1 is: $PATH"
-                echo "PATH_2 is: ${PATH}"
-            }
-        }
         stage('Clean') {
             steps {
                 sh 'mvn -B clean'
@@ -42,7 +36,7 @@ pipeline {
                 sh 'mvn install:install help:evaluate -Dexpression=project.name'    
             }
         }
-        stage('Build and Deploy Image') {
+        stage('Deploy Image') {
             steps{
                 sh "docker -v /var/run/docker.sock:/var/run/docker.sock push ${IMAGE_NAME}"
             }

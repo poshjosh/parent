@@ -19,12 +19,18 @@ pipeline {
             additionalBuildArgs "-t ${IMAGE_NAME}"
         }
     }
+    environment {
+        PATH = "C:/Program Files/Docker/Docker/resources/bin:$PATH"
+    }
     options {
         skipStagesAfterUnstable()
     }
     stages {
         stage('Initialize'){
-            env.PATH = "C:\Program Files\Docker\Docker\resources\bin:${env.PATH}"
+            steps {
+                echo "PATH_1 is: $PATH"
+                echo "PATH_2 is: ${PATH}"
+            }
         }
         stage('Clean') {
             steps {

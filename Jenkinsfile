@@ -44,7 +44,7 @@ pipeline {
         }
         stage('Build and Deploy Image') {
             steps{
-                sh "docker -v /root/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD":/usr/src/app -v "$HOME/.m2":/root/.m2 -v "$PWD/target:/usr/src/app/target" -w /usr/src/app push ${IMAGE_NAME}"
+                sh "docker -v /var/run/docker.sock:/var/run/docker.sock push ${IMAGE_NAME}"
             }
         }
         stage('Clean Up') {

@@ -9,10 +9,8 @@
  * run, and jenkins will complain about not being able to remove the container if
  * already removed due to --rm option in args.
  */
+def IMAGE_NAME = 'poshjosh/parent:latest'
 pipeline {
-    environment {
-        IMAGE_NAME = 'poshjosh/parent:latest'
-    }
     agent { 
         dockerfile {
             label 'docker'

@@ -15,7 +15,7 @@ pipeline {
         dockerfile {
             filename 'Dockerfile'
             registryCredentialsId 'dockerhub-creds'
-            args '-v C:/Program Files/Docker/Docker/resources/bin:/usr/bin/docker -v /root/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD":/usr/src/app -v "$HOME/.m2":/root/.m2 -v "$PWD/target:/usr/src/app/target" -w /usr/src/app' 
+            args '-v /root/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD":/usr/src/app -v "$HOME/.m2":/root/.m2 -v "$PWD/target:/usr/src/app/target" -w /usr/src/app' 
             additionalBuildArgs "-t ${IMAGE_NAME}"
         }
     }
@@ -38,7 +38,10 @@ pipeline {
         }
         stage('Deploy Image') {
             steps{
-                sh "docker -v /var/run/docker.sock:/var/run/docker.sock push ${IMAGE_NAME}"
+                sh '''
+                    "USER root" 
+                    "docker push ${IMAGE_NAME}"
+                '''
             }
         }
         stage('Clean Up') {

@@ -13,7 +13,6 @@ def IMAGE_NAME = 'poshjosh/parent:latest'
 pipeline {
     agent { 
         dockerfile {
-            label 'docker'
             filename 'Dockerfile'
             registryCredentialsId 'dockerhub-creds'
             args '-v /root/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD":/usr/src/app -v "$HOME/.m2":/root/.m2 -v "$PWD/target:/usr/src/app/target" -w /usr/src/app' 

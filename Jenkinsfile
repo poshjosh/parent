@@ -22,7 +22,7 @@ pipeline {
     environment {
         IMG = 'poshjosh/parent:latest'
         PATH = "C:/Program Files/Docker/Docker/resources/bin:$PATH"
-        registryCredentialsId 'dockerhub-creds'
+        registryCredential 'dockerhub-creds'
         dockerImage = ''
     }
     options {
@@ -51,7 +51,7 @@ pipeline {
             steps{
                 echo 'Deploying docker image'
                 script {
-                    docker.withRegistry( '', registryCredentialsId ) {
+                    docker.withRegistry( '', registryCredential ) {
                         dockerImage.push()
                     }
                 }

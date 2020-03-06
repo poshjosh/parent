@@ -22,7 +22,7 @@ pipeline {
     environment {
         IMG = 'poshjosh/parent:latest'
         PATH = "C:/Program Files/Docker/Docker/resources/bin:$PATH"
-        registryCredential 'dockerhub-creds'
+        registryCredential = 'dockerhub-creds'
         dockerImage = ''
     }
     options {

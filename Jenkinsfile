@@ -15,7 +15,7 @@ pipeline {
         dockerfile {
             filename 'Dockerfile'
             registryCredentialsId 'dockerhub-creds'
-            args '--group-add=$(stat -f "%g" /var/run/docker.sock) -v /root/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD":/usr/src/app -v "$HOME/.m2":/root/.m2 -v "$PWD/target:/usr/src/app/target" -w /usr/src/app' 
+            args '-v /root/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD":/usr/src/app -v "$HOME/.m2":/root/.m2 -v "$PWD/target:/usr/src/app/target" -w /usr/src/app' 
             additionalBuildArgs "-t ${IMAGE_NAME}"
         }
     }

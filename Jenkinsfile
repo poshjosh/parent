@@ -36,13 +36,6 @@ pipeline {
                 sh 'mvn install:install help:evaluate -Dexpression=project.name'    
             }
         }
-        stage('Reports') {
-            steps {
-                sh '''
-                    "mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=admin"    
-                '''    
-            }
-        }
         stage('Clean Up') {
             steps {
                 sh '''

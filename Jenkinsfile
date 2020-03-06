@@ -36,12 +36,5 @@ pipeline {
                 sh 'mvn install:install help:evaluate -Dexpression=project.name'    
             }
         }
-        stage('Clean Up') {
-            steps {
-                sh '''
-                    "if rm -rf target; then echo 'target dir removed'; else echo 'failed to remove target dir'; fi"
-                '''
-            } 
-        }
     }
 }

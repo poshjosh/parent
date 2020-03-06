@@ -20,7 +20,10 @@ pipeline {
         }
     }
     environment {
+        IMG = 'poshjosh/parent:latest'
         PATH = "C:/Program Files/Docker/Docker/resources/bin:$PATH"
+        registryCredentialsId 'dockerhub-creds'
+        dockerImage = ''
     }
     options {
         skipStagesAfterUnstable()
@@ -36,12 +39,20 @@ pipeline {
                 sh 'mvn install:install help:evaluate -Dexpression=project.name'    
             }
         }
+        stage('Build Image') {
+            steps{
+                script {
+                    dockerImage = docker.build IMG
+                }
+            }
+        }
         stage('Deploy Image') {
             steps{
-                sh '''
-                    "USER root" 
-                    "docker push ${IMAGE_NAME}"
-                '''
+                script {
+                    docker.withRegistry( '', registryCredentialsId ) {
+                        dockerImage.push()
+                    }
+                }
             }
         }
         stage('Clean Up') {

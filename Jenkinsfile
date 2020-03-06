@@ -41,6 +41,7 @@ pipeline {
         }
         stage('Build Image') {
             steps{
+                echo 'Building docker image'
                 script {
                     dockerImage = docker.build IMG
                 }
@@ -48,6 +49,7 @@ pipeline {
         }
         stage('Deploy Image') {
             steps{
+                echo 'Deploying docker image'
                 script {
                     docker.withRegistry( '', registryCredentialsId ) {
                         dockerImage.push()

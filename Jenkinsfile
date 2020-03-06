@@ -15,15 +15,12 @@ pipeline {
         dockerfile {
             filename 'Dockerfile'
             registryCredentialsId 'dockerhub-creds'
-            args '-v /root/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD":/usr/src/app -v "$HOME/.m2":/root/.m2 -v "$PWD/target:/usr/src/app/target" -w /usr/src/app' 
+            args '--group-add=$(stat -f "%g" /var/run/docker.sock) -v /root/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD":/usr/src/app -v "$HOME/.m2":/root/.m2 -v "$PWD/target:/usr/src/app/target" -w /usr/src/app' 
             additionalBuildArgs "-t ${IMAGE_NAME}"
         }
     }
     environment {
-        IMG = 'poshjosh/parent:latest'
         PATH = "C:/Program Files/Docker/Docker/resources/bin:$PATH"
-        registryCredential = 'dockerhub-creds'
-        dockerImage = ''
     }
     options {
         skipStagesAfterUnstable()
@@ -39,29 +36,18 @@ pipeline {
                 sh 'mvn install:install help:evaluate -Dexpression=project.name'    
             }
         }
-        stage('Build Image') {
-            steps{
-                echo 'Building docker image'
-                script {
-                    dockerImage = docker.build IMG
-                }
-            }
-        }
-        stage('Deploy Image') {
-            steps{
-                echo 'Deploying docker image'
-                script {
-                    docker.withRegistry( '', registryCredential ) {
-                        dockerImage.push()
-                    }
-                }
+        stage('Reports') {
+            steps {
+                sh '''
+                    "mvn site:site"
+                    "mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=admin"    
+                '''    
             }
         }
         stage('Clean Up') {
             steps {
                 sh '''
                     "if rm -rf target; then echo 'target dir removed'; else echo 'failed to remove target dir'; fi"
-                    "docker rmi ${IMAGE_NAME}"
                 '''
             } 
         }

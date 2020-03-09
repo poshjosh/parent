@@ -2,12 +2,6 @@
 /**
  * https://github.com/poshjosh/parent
  * @see https://hub.docker.com/_/maven
- *
- * Only double quoted strings support the dollar-sign ($) based string interpolation.
- *
- * Do not use --rm in args as the container will be removed by Jenkins after being 
- * run, and jenkins will complain about not being able to remove the container if
- * already removed due to --rm option in args.
  */
 pipeline {
     agent any
@@ -15,8 +9,8 @@ pipeline {
         ARTIFACTID = readMavenPom().getArtifactId();
         VERSION = readMavenPom().getVersion()
         PROJECT_NAME = "${ARTIFACTID}:${VERSION}"
-        IMAGE = "poshjosh/${PROJECT_NAME}";
-        IMAGE_NAME = IMAGE.toLowerCase()
+        IMAGE_REF = "poshjosh/${PROJECT_NAME}";
+        IMAGE_NAME = IMAGE_REF.toLowerCase()
     }
     options {
         timeout(time: 1, unit: 'HOURS')

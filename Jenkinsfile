@@ -42,7 +42,10 @@ pipeline {
 //                stage('Deploy Image') {
 //                    steps {
 //                        withDockerRegistry([url: '', credentialsId: 'dockerhub-creds']) {
-//                            sh "docker push $IMAGE_NAME"
+//                            sh ''' 
+//                                "docker push $IMAGE_NAME"
+//                                "docker rmi $IMAGE_NAME"
+//                            '''                            
 //                        }
 //                    }
 //                }

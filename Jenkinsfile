@@ -11,6 +11,7 @@ pipeline {
         PROJECT_NAME = "${ARTIFACTID}:${VERSION}"
         IMAGE_REF = "poshjosh/${PROJECT_NAME}";
         IMAGE_NAME = IMAGE_REF.toLowerCase()
+        VOLUME_BINDINGS = '-v /home/.m2:/root/.m2'
     }
     options {
         timestamps()
@@ -28,9 +29,9 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                    def additionalBuildArgs = "--pull"
+                    def additionalBuildArgs = "--pull ${VOLUME_BINDINGS}"
                     if (env.BRANCH_NAME == "master") {
-                        additionalBuildArgs = "--pull --no-cache"
+                        additionalBuildArgs = "--no-cache ${additionalBuildArgs}"
                     }
                     docker.build("${IMAGE_NAME}", "${additionalBuildArgs} .")
                 }

@@ -27,26 +27,25 @@ pipeline {
     }
     stages {
         stage('Build Image') {
-            agent{
-                dockerfile true
-            }
             steps {
-                script {
-                    def additionalBuildArgs = "--pull ${VOLUME_BINDINGS}"
-                    if (env.BRANCH_NAME == "master") {
-                        additionalBuildArgs = "--no-cache ${additionalBuildArgs}"
-                    }
-                    docker.build("${IMAGE_NAME}", "${additionalBuildArgs} .")
-                }
-            }
+                echo " = = = = = = =  BUILDING IMAGE = = = = = = = "
+//                script {
+//                    def additionalBuildArgs = "--pull ${VOLUME_BINDINGS}"
+//                    if (env.BRANCH_NAME == "master") {
+//                        additionalBuildArgs = "--no-cache ${additionalBuildArgs}"
+//                    }
+//                    docker.build("${IMAGE_NAME}", "${additionalBuildArgs} .")
+//                }
+//            }
         }
         stage('Clean & Install') {
             steps {
-                script{
-                    docker.image("${IMAGE_NAME}").inside{
-                        sh 'mvn -B clean:clean install:install'
-                    }
-                }
+                echo " = = = = = = =  BUILDING IMAGE = = = = = = = "
+//                script{
+//                    docker.image("${IMAGE_NAME}").inside{
+//                        sh 'mvn -B clean:clean install:install'
+//                   }
+//                }
             }
         }
         stage('Deploy Image') {
@@ -54,11 +53,12 @@ pipeline {
                 branch 'master'
             }
             steps {
-                script {
-                    docker.withRegistry('', 'dockerhub-creds') { // Must have been specified in Jenkins
-                        sh "docker push ${IMAGE_NAME}"
-                    }
-                }
+                echo " = = = = = = = DEPLOYING IMAGE = = = = = = = "
+//                script {
+//                    docker.withRegistry('', 'dockerhub-creds') { // Must have been specified in Jenkins
+//                        sh "docker push ${IMAGE_NAME}"
+//                    }
+//                }
             }
         }
     }

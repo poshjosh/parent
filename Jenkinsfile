@@ -11,7 +11,7 @@ pipeline {
         PROJECT_NAME = "${ARTIFACTID}:${VERSION}"
         IMAGE_REF = "poshjosh/${PROJECT_NAME}";
         IMAGE_NAME = IMAGE_REF.toLowerCase()
-        VOLUME_BINDINGS = '-u 0 -v /home/.m2:/root/.m2 -v /usr/bin/docker:/usr/bin/docker'
+        VOLUME_BINDINGS = '-v /home/.m2:/root/.m2'
     }
     options {
         timestamps()
@@ -29,23 +29,23 @@ pipeline {
         stage('Build Image') {
             steps {
                 echo " = = = = = = = BUILDING IMAGE = = = = = = = "
-//                script {
-//                    def additionalBuildArgs = "--pull ${VOLUME_BINDINGS}"
-//                    if (env.BRANCH_NAME == "master") {
-//                        additionalBuildArgs = "--no-cache ${additionalBuildArgs}"
-//                    }
-//                    docker.build("${IMAGE_NAME}", "${additionalBuildArgs} .")
-//                }
+                script {
+                    def additionalBuildArgs = "--pull ${VOLUME_BINDINGS}"
+                    if (env.BRANCH_NAME == "master") {
+                        additionalBuildArgs = "--no-cache ${additionalBuildArgs}"
+                    }
+                    docker.build("${IMAGE_NAME}", "${additionalBuildArgs} .")
+                }
             }
         }
         stage('Clean & Install') {
             steps {
                 echo " = = = = = = = CLEAN & INSTALL = = = = = = = "
-//                script{
-//                    docker.image("${IMAGE_NAME}").inside{
-//                        sh 'mvn -B clean:clean install:install'
-//                   }
-//                }
+                script{
+                    docker.image("${IMAGE_NAME}").inside{
+                        sh 'mvn -B clean:clean install:install'
+                   }
+                }
             }
         }
         stage('Deploy Image') {
@@ -54,11 +54,11 @@ pipeline {
             }
             steps {
                 echo " = = = = = = = DEPLOYING IMAGE = = = = = = = "
-//                script {
-//                    docker.withRegistry('', 'dockerhub-creds') { // Must have been specified in Jenkins
-//                        sh "docker push ${IMAGE_NAME}"
-//                    }
-//                }
+                script {
+                    docker.withRegistry('', 'dockerhub-creds') { // Must have been specified in Jenkins
+                        sh "docker push ${IMAGE_NAME}"
+                    }
+                }
             }
         }
     }

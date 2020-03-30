@@ -28,7 +28,7 @@ pipeline {
     stages {
         stage('Build Image') {
             steps {
-                echo " = = = = = = =  BUILDING IMAGE = = = = = = = "
+                echo " = = = = = = = BUILDING IMAGE = = = = = = = "
 //                script {
 //                    def additionalBuildArgs = "--pull ${VOLUME_BINDINGS}"
 //                    if (env.BRANCH_NAME == "master") {
@@ -40,7 +40,7 @@ pipeline {
         }
         stage('Clean & Install') {
             steps {
-                echo " = = = = = = =  BUILDING IMAGE = = = = = = = "
+                echo " = = = = = = = CLEAN & INSTALL = = = = = = = "
 //                script{
 //                    docker.image("${IMAGE_NAME}").inside{
 //                        sh 'mvn -B clean:clean install:install'
@@ -65,7 +65,7 @@ pipeline {
     post {
         always {
             deleteDir() /* clean up workspace */
-            sh "docker system prune -f --volumes"
+//            sh "docker system prune -f --volumes"
         }
         failure {
             mail(

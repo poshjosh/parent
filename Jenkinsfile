@@ -36,7 +36,7 @@ pipeline {
 //                    }
 //                    docker.build("${IMAGE_NAME}", "${additionalBuildArgs} .")
 //                }
-//            }
+            }
         }
         stage('Clean & Install') {
             steps {

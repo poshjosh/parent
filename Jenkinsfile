@@ -11,7 +11,7 @@ pipeline {
         PROJECT_NAME = "${ARTIFACTID}:${VERSION}"
         IMAGE_REF = "poshjosh/${PROJECT_NAME}";
         IMAGE_NAME = IMAGE_REF.toLowerCase()
-        VOLUME_BINDINGS = '-u root -v /home/.m2:/root/.m2 -v /usr/bin/docker:/usr/bin/docker'
+        VOLUME_BINDINGS = '-u 0 -v /home/.m2:/root/.m2 -v /usr/bin/docker:/usr/bin/docker'
     }
     options {
         timestamps()
@@ -27,6 +27,9 @@ pipeline {
     }
     stages {
         stage('Build Image') {
+            agent{
+                dockerfile true
+            }
             steps {
                 script {
                     def additionalBuildArgs = "--pull ${VOLUME_BINDINGS}"

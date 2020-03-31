@@ -11,6 +11,7 @@ pipeline {
         PROJECT_NAME = "${ARTIFACTID}:${VERSION}"
         IMAGE_REF = "poshjosh/${PROJECT_NAME}";
         IMAGE_NAME = IMAGE_REF.toLowerCase()
+        VOLUME_BINDINGS = '-v /home/.m2:/root/.m2'
     }
     options {
         timestamps()
@@ -41,7 +42,7 @@ pipeline {
             steps {
                 echo " = = = = = = = CLEAN & INSTALL = = = = = = = "
                 script{
-                    docker.image("${IMAGE_NAME}").inside{
+                    docker.image("${IMAGE_NAME}").inside("${VOLUME_BINDINGS}"){
                         sh 'mvn -B clean:clean install:install'
                    }
                 }

@@ -51,7 +51,10 @@ pipeline {
         }
         stage('Deploy Image') {
             when {
-                branch '*/master'
+//                branch 'master' Only works for multibranch pipeline
+                expression {
+                    return env.GIT_BRANCH == "origin/master"
+                }
             }
             steps {
                 echo " = = = = = = = DEPLOYING IMAGE = = = = = = = "

@@ -12,6 +12,7 @@ pipeline {
         IMAGE_REF = "poshjosh/${PROJECT_NAME}";
         IMAGE_NAME = IMAGE_REF.toLowerCase()
         VOLUME_BINDINGS = '-v /home/.m2:/root/.m2'
+        FAILURE_EMAIL_RECIPIENT = 'posh.bc@gmail.com'
     }
     options {
         timestamps()
@@ -50,7 +51,7 @@ pipeline {
         }
         stage('Deploy Image') {
             when {
-                branch 'master'
+                branch '*/master'
             }
             steps {
                 echo " = = = = = = = DEPLOYING IMAGE = = = = = = = "
@@ -65,11 +66,11 @@ pipeline {
     post {
         always {
             deleteDir() /* clean up workspace */
-//            sh "docker system prune -f --volumes"
+            sh "docker system prune -f --volumes"
         }
         failure {
             mail(
-                to: 'posh.bc@gmail.com',
+                to: "${FAILURE_EMAIL_RECIPIENT}",
                 subject: "$IMAGE_NAME - Build # $BUILD_NUMBER - FAILED!",
                 body: "$IMAGE_NAME - Build # $BUILD_NUMBER - FAILED:\n\nCheck console output at ${env.BUILD_URL} to view the results."
             )

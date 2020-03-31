@@ -68,7 +68,19 @@ pipeline {
     }
     post {
         always {
-            deleteDir() /* clean up workspace */
+            script{
+                retry(3) {
+                    try {
+                        timeout(time: 60, unit: 'SECONDS') {
+                            deleteDir() // Clean up workspace
+                        }
+                    } catch (org.jenkinsci.plugins.workflow.steps.FlowInterruptedException e) {
+                        // we re-throw as a different error, that would not
+                        // cause retry() to fail (workaround for issue JENKINS-51454)
+                        error 'Timeout!'
+                    }
+                } // retry ends
+            }
             sh "docker system prune -f --volumes"
         }
         failure {

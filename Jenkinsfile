@@ -12,4 +12,5 @@ library(
     )
 )
 
-pipelineForMavenDockerfile()
+pipelineForMavenDockerfile(
+        buildContext : 'https://github.com/poshjosh/jenkins-shared-library/blob/master')

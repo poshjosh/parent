@@ -12,10 +12,6 @@ ENV MAVEN_OPTS="-XX:+TieredCompilation -XX:TieredStopAtLevel=1"
 # ------------------
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
-# Create and use non-root user
-# ---------------------------
-RUN addgroup -S poshjosh && adduser -S poshjosh -G poshjosh
-USER poshjosh
 # Install maven dependency packages (keep in image).
 # Create a pre-packaged repository by using our pom.xml and settings file
 # /usr/share/maven/ref/settings-docker.xml which is a settings file that changes

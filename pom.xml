@@ -7,6 +7,27 @@
     <version>1.0-SNAPSHOT</version>
 
     <packaging>pom</packaging>
+    
+    <modules>
+    	<module>../bcxml</module>
+    	<module>../bcreflection</module>
+    	<module>../bcimageutil</module>
+    	<module>../bcfileupload</module>
+    	<module>../bcdbmetaaccess</module>
+    	<module>../bcjpadao</module>
+    	<module>../bcjpaspring</module>
+    	<module>../bcwebform</module>
+    	<module>../bcsecurity</module>
+    	<module>../gmailapi</module>
+        <module>../bcfileclient</module>
+    	<module>../mailsender</module>
+    	<module>../paystackjava</module>
+    	<module>../voguepay-java-client</module>
+    	<module>../bcbotchecker</module>
+    	<module>../websocket-lib</module>
+    	<module>../spring-boot-oauth</module>
+    	<module>../webform</module>
+    </modules>
     <url>http://www.looseboxes.com</url>
 
     <issueManagement>

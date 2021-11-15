@@ -9,6 +9,7 @@
     <packaging>pom</packaging>
     
     <modules>
+        <module>../spring-webapp-util</module>
     	<module>../bcxml</module>
     	<module>../bcreflection</module>
     	<module>../bcimageutil</module>
@@ -27,6 +28,8 @@
     	<module>../websocket-lib</module>
     	<module>../spring-boot-oauth</module>
     	<module>../webform</module>
+        <module>../rate-limiter</module>
+        <module>../rate-limiter-spring</module>
     </modules>
     <url>http://www.looseboxes.com</url>
 

@@ -29,7 +29,9 @@
     	<module>../spring-boot-oauth</module>
     	<module>../webform</module>
         <module>../rate-limiter</module>
+        <module>../rate-limiter-web-core</module>
         <module>../rate-limiter-spring</module>
+        <module>../rate-limiter-javaee</module>
     </modules>
     <url>http://www.looseboxes.com</url>
 

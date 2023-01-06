@@ -7,7 +7,10 @@
     <version>1.0</version>
 
     <packaging>pom</packaging>
-    
+
+    <name>${project.artifactId}</name>
+    <description>Parent</description>
+
     <modules>
         <module>../spring-webapp-util</module>
     	<module>../bcxml</module>
